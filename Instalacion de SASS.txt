@@ -1,0 +1,13 @@
+instalacion de Sass 
+
+1- Descargar Node.js 
+2- Instalar npm desde la terminal / npm init
+3- Instalar el Nodemon / npm install -D node-sass nodemon
+4- Crear la carpeta scss y css con sus archivos. 
+5- Agregar al package.json 
+	"build-css": "node-sass --include-path scss scss/style.scss css/style.css",
+    	"watch-css": "nodemon -e scss -x \"npm run build-css\""
+6- Compilar desde la terminal / npm run watch-css. 
+7- Watch-sass plugin de VSC
+
+

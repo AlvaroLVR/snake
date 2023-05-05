@@ -1,0 +1,19 @@
+GIT 
+Creacion de rama 
+- git brach: te muestra las ramas que hay en el repo local
+- git branch NOMBREDELANUEVARAMA: Crea una nueva rama con el nombre especificado
+- git show-brach: muestra la descripcion de las ramas
+- git checkout NOMBREDELANUEVARAMA: permite moverse a la rama especificada y empezar a trabajarla.
+- git checkout -b otrarama: crea nueva rama.
+fusionar ramas 
+- git merge experimental: fusiona las ramas en relacion a la rama en que se encuentre
+  * git merge experimental -m 'mensaje' : como en el commit se puede agregar mensaje de la fusion
+- git merge master -m 'Un mensaje del merge de master en el branch experimental': fusiona la master a  nuestra rama
+subir una rama al repo remoto 
+- git push -u origin NOMBREDELANUEVARAMA: sube al repo remoto la nueva rama
+borrar la rama
+- git branch -d rama_a_borrar
+- git push origin --delete rama_a_borrar: elimina la rama en el repo remoto
+
+
+

@@ -1,0 +1,11 @@
+body{
+    ul{
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        padding: 0;
+        li{
+            margin-left: 4rem;
+        }
+    }
+}
