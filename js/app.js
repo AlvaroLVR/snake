@@ -13,6 +13,7 @@ var drawFlag = false;
 var ejeX;
 var izq;
 var arriba;
+var flat = .60;
 
 /* Scenario */
 /* for (i = 0; i < 40; i++) {
@@ -103,10 +104,16 @@ if (canvas.getContext) {
             
         }
         if ((apple.x >= snake.x && snake.x >= apple.x) && (apple.y >= snake.y && snake.y >= apple.y)) {
+            flat -= 0.05
             console.log('COLISION');
             apple.x = getRandomInt(8);
             apple.y = getRandomInt(5);
-            snake.velocity -= 10;
+            snake.velocity -= Math.floor(Math.pow(60,flat));
+
+            if (snake.velocity == 0 ) {
+                cancelAnimationFrame(dibujar);
+                alert('felicidades terminaste el juego!')
+            }
             //snake.color = 'red'
         }
     }
@@ -114,7 +121,6 @@ if (canvas.getContext) {
     
     const drawSnake = () => {
         ctx.lineTo(snake.x, snake.y)
-        //ctx.moveTo(snake.x, snake.y);
         
         ctx.strokeStyle = snake.color;
         ctx.lineWidth = snake.width;
@@ -150,7 +156,7 @@ if (canvas.getContext) {
             if (!ejeX) {
                 arriba ? snake.y-=20 : snake.y+=20;
             }
-            console.log(snake.velocity , 'velocidad snake ');
+            console.log(snake.velocity  , 'velocidad snake ');
             num = 0;
         }
         
