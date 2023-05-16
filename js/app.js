@@ -29,11 +29,8 @@ var flat = .60;
 
 /* Number random */
 function getRandomInt(max) {
-    random = (Math.floor(Math.random() * max) * 100)
-    if (random == 0) {
-        random = (Math.floor(Math.random() * max) * 100)
-    }
-
+    random = (Math.floor(Math.random() * max) * 100) 
+    random == 0 ? random = (Math.floor(Math.random() * max) * 100)  : random * 100 
     return random;
 }
 
@@ -94,14 +91,16 @@ if (canvas.getContext) {
             ctx.strokeStyle = 'red';
             snake.dead = true;
             console.log('fuera de juego');
-            
+            snake.velocity = 60;
         }
         if (snake.dead) {
-            alert('juego terminado');
+            alert('Perdiste');
             snake.dead = false;
             snake.x = getRandomInt(8);
             snake.y = getRandomInt(5);
-            
+            apple.x = getRandomInt(8);
+            apple.y = getRandomInt(5);
+            ctx.clearRect(0,0,canvas.width,canvas.height)
         }
         if ((apple.x >= snake.x && snake.x >= apple.x) && (apple.y >= snake.y && snake.y >= apple.y)) {
             flat -= 0.05
@@ -109,11 +108,12 @@ if (canvas.getContext) {
             apple.x = getRandomInt(8);
             apple.y = getRandomInt(5);
             snake.velocity -= Math.floor(Math.pow(60,flat));
-
+            
             if (snake.velocity == 0 ) {
                 cancelAnimationFrame(dibujar);
                 alert('felicidades terminaste el juego!')
             }
+            ctx.clearRect(0,0,canvas.width,canvas.height)
             //snake.color = 'red'
         }
     }
