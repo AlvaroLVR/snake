@@ -6,7 +6,7 @@ var random = 0;
 var num = 0;
 var keyPress = '';
 var numero = 0;
-var flag = false;
+var flag;
 var request;
 var intervalo = 1000;
 var drawFlag = false;
@@ -16,33 +16,33 @@ var arriba;
 var flat = .60;
 
 /* Scenario */
-/* for (i = 0; i < 40; i++) {
+for (i = 0; i < 40; i++) {
     ctx.beginPath();
     ctx.setLineDash([]);
     ctx.moveTo(0, i * 20);
     ctx.lineTo(800, i * 20);
-    
+
     ctx.moveTo(i * 20, 0);
     ctx.lineTo(i * 20, 500);
     ctx.stroke();
-} */
+}
 
 /* Number random */
 function getRandomInt(max) {
-    random = (Math.floor(Math.random() * max) * 100) 
-    random == 0 ? random = (Math.floor(Math.random() * max) * 100)  : random * 100 
+    random = (Math.floor(Math.random() * max) * 100)
+    random == 0 ? random = (Math.floor(Math.random() * max) * 100) : random * 100
     return random;
 }
 
 if (canvas.getContext) {
-    
+
     /* Direcciones */
-    window.addEventListener('keydown', (e) => {    
+    window.addEventListener('keydown', (e) => {
         e.key == Number(e.key) ? console.log('es un numero') : (keyPress = e.key);
-        
+
         //console.log('se presiono una tecla',keyPress); 
         if (keyPress == 'p') {
-            cancelAnimationFrame(request)  
+            cancelAnimationFrame(request)
         }
         if (keyPress == 's') {
             dibujar()
@@ -69,7 +69,7 @@ if (canvas.getContext) {
 
     /* Snake */
     const snake = {
-        x: getRandomInt(8),   // begin
+        x: getRandomInt(8),
         y: getRandomInt(5),
         width: 20,
         color: '#018301',
@@ -84,9 +84,9 @@ if (canvas.getContext) {
         x: getRandomInt(7),   // begin
         y: getRandomInt(4),
     }
-    
+
     /* Limites */
-    function limit (){
+    function limit() {
         if (snake.y <= 0 || snake.y >= canvas.height || snake.x <= 0 || snake.x >= canvas.width) {
             ctx.strokeStyle = 'red';
             snake.dead = true;
@@ -100,74 +100,70 @@ if (canvas.getContext) {
             snake.y = getRandomInt(5);
             apple.x = getRandomInt(8);
             apple.y = getRandomInt(5);
-            ctx.clearRect(0,0,canvas.width,canvas.height)
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
         }
         if ((apple.x >= snake.x && snake.x >= apple.x) && (apple.y >= snake.y && snake.y >= apple.y)) {
             flat -= 0.05
             console.log('COLISION');
             apple.x = getRandomInt(8);
             apple.y = getRandomInt(5);
-            snake.velocity -= Math.floor(Math.pow(60,flat));
-            
-            if (snake.velocity == 0 ) {
+            snake.velocity -= Math.floor(Math.pow(60, flat));
+
+            if (snake.velocity == 0) {
                 cancelAnimationFrame(dibujar);
                 alert('felicidades terminaste el juego!')
             }
-            ctx.clearRect(0,0,canvas.width,canvas.height)
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
             //snake.color = 'red'
         }
     }
 
-    
+    /* draw and speed */
     const drawSnake = () => {
-        ctx.lineTo(snake.x, snake.y)
-        
+
+        ctx.clearRect(snake.x-10, snake.y+10, 20, 20)
+        ctx.beginPath();
+        ctx.moveTo(snake.x, snake.y);
         ctx.strokeStyle = snake.color;
         ctx.lineWidth = snake.width;
         ctx.lineCap = 'square';
         ctx.lineJoin = 'round';
-
-        drawFlag = true;
-        /* console.log('se dibuja el snake'); */
+        ctx.lineTo(snake.x, snake.y);
+        ctx.stroke();
+        ctx.closePath();
     }
+    const drawApple = () => {
 
-    const drawApple = () => {          
+        ctx.beginPath();
         ctx.lineTo(apple.x, apple.y);
-
         ctx.lineWidth = apple.width;
         ctx.strokeStyle = apple.color;
         ctx.lineCap = 'round';
-
-        drawFlag = false;
-        /* console.log('se dibuja la manzana'); */
+        ctx.stroke();
+        ctx.closePath();
     }
-
-    /* draw and speed */
-    function dibujar () {
+    function dibujar() {
         ++num;
-        ctx.beginPath();   
-        drawFlag ? drawApple():drawSnake();
+        drawSnake();
+        drawApple();
 
         if (num == snake.velocity) {
 
             if (ejeX) {
-                izq ? snake.x-=20 : snake.x+=20; 
+                izq ? snake.x -= 20 : snake.x += 20;
             }
             if (!ejeX) {
-                arriba ? snake.y-=20 : snake.y+=20;
+                arriba ? snake.y -= 20 : snake.y += 20;
             }
-            console.log(snake.velocity  , 'velocidad snake ');
+            console.log(snake.velocity, 'velocidad snake ');
             num = 0;
         }
-        
-        ctx.stroke();
-        console.log('me estoy dibujado');
+
         limit();
 
         request = requestAnimationFrame(dibujar)
     }
-    
-    
+
 } else {
     /* unnsoported code */
     document.write('<h1>This site not support canvas. please retry in another dispositive</h1>')
